@@ -90,7 +90,7 @@ O **n8n** será utilizado para gerar descrições automáticas de Pokémons. Par
 
 2. **Crie um novo Workflow:**
    - Clique em **"Create Workflow"**.
-   - Clique em **"Import From File"** e selecione o arquivo `.json` do workflow que já está anexado no projeto.
+   - Clique em **"Import From File"** e selecione o arquivo `My_workflow.json` do workflow que já está anexado no projeto.
    - Salve o workflow.
 
 3. **Obtenha a URL do webhook de produção:**
@@ -123,5 +123,6 @@ Após configurar e rodar o backend e frontend, você pode acessar a interface do
 - **Gerar descrição com IA:** Ao clicar no botão **"Gerar Descrição com IA"**, a aplicação utilizará o serviço de IA para criar automaticamente uma descrição para o Pokémon.
 
 Pronto! Agora você já pode explorar, filtrar e gerar descrições para os Pokémons.
+
 
 
