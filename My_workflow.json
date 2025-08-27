@@ -1,0 +1,121 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "81c4ddb7-5218-492c-bdf0-64706e6bb97a",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "60922ba2-45db-40b7-ae96-317cfca8344b",
+      "name": "Webhook",
+      "webhookId": "81c4ddb7-5218-492c-bdf0-64706e6bb97a"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Crie uma descrição criativa, em português, de um parágrafo para um Pokémon com as seguintes características: Nome: {{ $json.body.name }}, Tipos: {{ $json.body.types }}, Habilidades: {{ $json.body.abilities }}. A descrição deve ser envolvente, baseada nos dados fornecidos e breve.",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        260,
+        0
+      ],
+      "id": "9b39bd34-5f77-4b71-a1c7-43afc84c15a7",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=http://api:3000/api/pokemons/{{ $('Webhook').item.json.body.id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"description\": {{ JSON.stringify($('AI Agent').item.json.output) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        0
+      ],
+      "id": "657d4c62-3e73-4c81-b032-7684531fc7c4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        280,
+        220
+      ],
+      "id": "0eda7a3c-3e8c-450f-a75d-45aec51c087f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "dexpKP7LcpcSEzZ1",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "20e666a0-a9ed-4c48-9bba-840131cea927",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6c165cb007615f6d3d55d2ff50c1423f27c87f6ed36ba3f42fbf5b5a2f806ea5"
+  },
+  "id": "zh5T0PqjCsu8DRLG",
+  "tags": []
+}
