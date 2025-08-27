@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-lock.yaml
+
+# Next.js
+.next/
+out/
+.vercel/
+npm-debug.log*
+
+# Docker
+*.env
+.dockerignore
+docker-compose.override.yml # Se você usar um override para dev local
+# Volumes Docker (se você os criar fora do compose)
+# db_storage/
+# n8n_storage/
+
+# Logs
+logs/
+*.log
+*.tmp
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

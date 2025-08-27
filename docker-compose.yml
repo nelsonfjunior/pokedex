@@ -1,0 +1,85 @@
+version: "3.9"  # ou a versão que estiver usando
+
+services:
+  api:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    # container_name: pokedex-api   # recomendo remover o container_name para evitar conflitos
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy   # observe a nota abaixo sobre compatibilidade
+    restart: unless-stopped
+    # se quiser forçar um comando específico que funciona:
+    # command: ["node", "dist/app.js"]
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    # container_name: pokedex-frontend
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    # container_name: pokedex-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_storage:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_storage:/home/node/.n8n
+    env_file:
+      - .env
+    environment:
+      - N8N_HOST=n8n    # melhor do que localhost para ser consistente internamente
+      - N8N_PROTOCOL=http
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD}
+    depends_on:
+      - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    depends_on:
+      - db
+
+volumes:
+  db_storage:
+  n8n_storage:
