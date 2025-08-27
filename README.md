@@ -16,8 +16,8 @@ Este README descreve como rodar o projeto localmente usando **Docker Compose** e
 ## 1. Clonar o repositório
 
 ```bash
-git clone <URL_DO_REPO>
-cd <nome-do-repo>
+git clone [<URL_DO_REPO>](https://github.com/nelsonfjunior/pokedex.git)
+cd pokedex
 ```
 
 ---
@@ -58,7 +58,7 @@ docker compose ps
 
 **Portas padrão:**
 
-- Backend: [http://localhost:3000](http://localhost:3000) (exporá `/api/pokemons`)
+- Backend: [http://localhost:3000](http://localhost:3000) (`/api/pokemons`)
 - Frontend: [http://localhost:3001](http://localhost:3001)
 - phpMyAdmin: [http://localhost:8080](http://localhost:8080)
 - n8n: [http://localhost:5678](http://localhost:5678)
@@ -123,3 +123,4 @@ Após configurar e rodar o backend e frontend, você pode acessar a interface do
 - **Gerar descrição com IA:** Ao clicar no botão **"Gerar Descrição com IA"**, a aplicação utilizará o serviço de IA para criar automaticamente uma descrição para o Pokémon.
 
 Pronto! Agora você já pode explorar, filtrar e gerar descrições para os Pokémons.
+
