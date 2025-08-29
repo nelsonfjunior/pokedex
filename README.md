@@ -102,7 +102,7 @@ WEBHOOK_N8N=http://n8n:5678/webhook/<id-gerado-pelo-n8n>
 ```
 
 4. **Obtenha uma API Key do Gemini:**
-   - Abra o [Google AI Studio (Gemini)](https://aistudio.google.com/).
+   - Abra o [Google AI Studio (Gemini)](https://aistudio.google.com/apikey).
    - Gere uma **API Key**.
    - Coloque no no fluxo do workflow, no Google Gemini Chat Model.
 
@@ -123,6 +123,7 @@ Após configurar e rodar o backend e frontend, você pode acessar a interface do
 - **Gerar descrição com IA:** Ao clicar no botão **"Gerar Descrição com IA"**, a aplicação utilizará o serviço de IA para criar automaticamente uma descrição para o Pokémon.
 
 Pronto! Agora você já pode explorar, filtrar e gerar descrições para os Pokémons.
+
 
 
 
